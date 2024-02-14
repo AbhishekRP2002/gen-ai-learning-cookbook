@@ -1,0 +1,1 @@
+# TODO : Create a vector embedding from a csv dataset and perform semantic search on top of it leveraging the newly created vector embeddings 
