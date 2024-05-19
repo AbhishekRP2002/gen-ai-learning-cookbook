@@ -1,5 +1,4 @@
-import langchain
-import openai
+from openai import OpenAI
 from dotenv import load_dotenv
 import os
 import logging
@@ -28,8 +27,8 @@ def get_weather_forecast(location, unit = "celsius"):
     return response
     
 
-# client = OpenAI()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI()
+client.api_key = os.getenv("OPENAI_API_KEY")
 tools = [
     {
         "type": "function",
@@ -58,11 +57,11 @@ messages = [
     {"role": "user", "content": "What's the weather like in Boston today?"} # Please note that searching by states available only for the USA locations. We can use Geocoder API to get the location coordinates and then use the OpenWeatherMap API to get the weather forecast.
     ]
 
-completion_response = openai.ChatCompletion.create(
+completion_response = client.chat.completions.create(
     model="gpt-3.5-turbo-0125",
     messages=messages,
     tools=tools,
-    tools_choice="auto"
+    # tools_choice="auto"
 )
 
 response_message = completion_response.choices[0].message
@@ -73,7 +72,7 @@ if tool_calls:
     }
     messages.append(response_message)
     for tool_call in tool_calls:
-        function_name = tool_call.function_name
+        function_name = tool_call.function.name
         function = available_functions[function_name]
         function_args = json.loads(tool_call.arguments)
         function_kwargs = tool_call.keyword_arguments
