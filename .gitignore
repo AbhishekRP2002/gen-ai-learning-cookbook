@@ -159,5 +159,7 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-csv-rag-agent/*.csv
-db
+tabular_data_reasoning_with_llms/csv-rag-agent/*.csv
+tabular_data_reasoning_with_llms/image
+tabular_data_reasoning_with_llms/db
+llama-index/image
